@@ -8,12 +8,11 @@
 	
 	function wxr_handle_uploads() {
 	
-		if ( isset ( $_POST['bigfile'] ) ) {
+		if ( isset ( $_FILES['bigfile'] ) ) {
 		
-			// do stuff
+			echo 'The upload worked!';
 		
 		}
-	
 	
 	}
 

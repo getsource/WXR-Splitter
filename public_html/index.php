@@ -1,8 +1,5 @@
 <?php 
-	require_once("library/functions.php"); 
-
-	wxr_handle_uploads();	
-	
+	require_once("library/functions.php");
 ?>
 
 <!doctype html>
@@ -55,8 +52,13 @@
 		</div>
 	
 		<div class="text">
-			<input type="file" name="somename" size="chars" />
+			<form method="post" enctype="multipart/form-data"> 
+				<input type="file" name="bigfile" size="chars" />
+				<input type="submit" value="Submit" />			
+			</form>
 		</div>
+		
+		<?php wxr_handle_uploads(); ?>
 		
     </div>
     <footer>
