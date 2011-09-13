@@ -2,52 +2,37 @@
 
 $CHOPPEDPRESS_CMD = "/home/wxrsplitter/wxrsplitter.getsource.net/choppedPress.py";
 $OUTPUT_PATH = "/home/wxrsplitter/wxrsplitter.getsource.net/public_html/splitFiles/";
+$OUTPUT_PATH_LIVE = "http://wxrsplitter.getsource.net/splitFiles/";
+$MAX_INT_LENGTH = 3;
+$DEBUG = false;
 
-if ($_FILES["file"]["error"] > 0)
-  {
-  echo "Error: " . $_FILES["file"]["error"] . "<br />\n";
-  }
-else
-  {
-  echo "Upload: " . $_FILES["file"]["name"] . "<br />\n";
-  echo "Type: " . $_FILES["file"]["type"] . "<br />\n";
-  echo "Size: " . ($_FILES["file"]["size"] / 1024) . " Mb<br />\n";
-  echo "Stored in: " . $_FILES["file"]["tmp_name"] . "<br />\n\n";
-  }
 
+if ($_FILES["file"]["error"] > 0) {
+	die("File Upload Failed");
+	// echo "Error: " . $_FILES["file"]["error"] . "<br />\n";
+}
 
 $fileToConvert = $_FILES["file"]["tmp_name"];
 $fileSize = $_FILES["file"]["size"] / (1024*1024);
-
 $outputFile = md5( rand() + time() );
-
-
-
-
-echo "FileToConvert Contents: '$fileToConvert'";
-// Add Default file to Convert for testing
-if ( !$fileToConvert ) {
-	$fileToConvert = "/home/wxrsplitter/testFile.xml";
-
-	echo "Copying '$fileToConvert' to '$OUTPUT_PATH$outputFile.xml'\n";
-	
-	if ( !copy($fileToConvert, "$OUTPUT_PATH$outputFile.xml") )
-		die( "File copy Failed!" );
-		
-	$fileSize = filesize($fileToConvert) / (1024*1024);
-	echo "FileSize: $fileSize";
-}
-
 
 $numChunks = (int)$fileSize;
 
-move_uploaded_file($fileToConvert, "$OUTPUT_PATH$outputFile.xml");
 
-$commandToRun = "python $CHOPPEDPRESS_CMD -n $numChunks -i $OUTPUT_PATH$outputFile.xml -o $OUTPUT_PATH$outputFile";
+$commandToRun = "python $CHOPPEDPRESS_CMD -n $numChunks -i $fileToConvert -o $OUTPUT_PATH$outputFile";
 
-echo "Running $commandToRun ...";
-$output = shell_exec( $commandToRun );
+$commandOutput = shell_exec ( $commandToRun );
 
-echo $output;
+if ($DEBUG)
+	echo $commandOutput;
+
+
+// Output File Links
+echo ("Your Split Files!<br>");
+
+for ($i=1; $i <= $numChunks; $i++) {
+	$paddedFileName = $outputFile . str_pad( (int)$i, $MAX_INT_LENGTH, "0", STR_PAD_LEFT) . ".xml";
+	echo "<a href='$OUTPUT_PATH_LIVE$paddedFileName'>$paddedFileName</a><br>";
+}
 
 ?>
