@@ -1,3 +1,7 @@
+<?php 
+	require_once("library/functions.php");
+?>
+
 <!doctype html>
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
@@ -48,8 +52,13 @@
 		</div>
 	
 		<div class="text">
-			<input type="file" name="somename" size="chars" />
+			<form method="post" enctype="multipart/form-data"> 
+				<input type="file" name="bigfile" size="chars" />
+				<input type="submit" value="Submit" />			
+			</form>
 		</div>
+		
+		<?php wxr_handle_uploads(); ?>
 		
     </div>
     <footer>
