@@ -5,6 +5,22 @@
 	 *
 	 *
 	 */
+
+	function wxr_handle_url() {
+		
+		$page = array();
+		
+		$URL = (!empty($_SERVER['HTTPS'])) ? "https://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'] : "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+	 	
+		if ( !empty( $URL ) ) {
+			
+			$page['slug'] = end(explode ('/', $URL));
+			$page['depth'] = count( explode('/' , str_replace( SITE_URL . '/', '', $URL) ) );
+		
+		}
+		
+		return $page;
+	}
 	
 	function wxr_handle_uploads() {
 	
