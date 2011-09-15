@@ -6,7 +6,7 @@
 	// $MAX_INT_LENGTH = 		3;
 	// $DEBUG = 				false;
 
-	define ( 'WXR_DIR' ,		WXR_BASEDIR . '/public_html' );
+	define ( 'WXR_DIR' ,		WXR_BASEDIR . 'public_html' );
 
 	define ( 'WXR_CMD' , 		WXR_BASEDIR . '/choppedPress.py' );
 	define ( 'WXR_PATH' , 		WXR_DIR . '/splitFiles/' );
@@ -19,6 +19,9 @@
 
 	define ( 'MAX_INT_LENGTH' ,	3 );
 	define ( 'WXR_DEBUG' , 		false );
+
+	if ( !file_exists( WXR_PATH ) )
+		mkdir( WXR_PATH );
 
 	/**
 	 * Function to include files from a directory.

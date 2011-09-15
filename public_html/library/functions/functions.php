@@ -80,7 +80,6 @@
 			if ( WXR_DEBUG )
 				echo $commandOutput;
 			
-			
 			// Output File Links
 			echo ("<h2>Your Split Files!<h2>");
 			
@@ -89,7 +88,7 @@
 			
 			for ($i=1; $i <= $numChunks; $i++) {
 				$paddedFileName = $outputFile . str_pad( (int)$i, MAX_INT_LENGTH, "0", STR_PAD_LEFT) . ".xml";
-				echo "<li><a href='$OUTPUT_URL$paddedFileName'>$paddedFileName</a></li>";
+				echo "<li><a href='{$OUTPUT_URL}/$paddedFileName'>$paddedFileName</a></li>";
 			}
 			echo "</ul>";
 			
@@ -100,7 +99,7 @@
 			Zip( $dir , $dest );
 			
 			echo "<h2>Or try this zip:</h2>";
-			echo "<p><a href='{$OUTPUT_URL}compressed.zip'>$paddedFileName.zip</a></p>";
+			echo "<p><a href='{$OUTPUT_URL}/compressed.zip'>$paddedFileName.zip</a></p>";
 			
 			// offer download of all files zipped
 		} else {
