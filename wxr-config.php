@@ -1,37 +1,55 @@
 <?php
 
-	// $CHOPPEDPRESS_CMD = 		"/home/wxrsplitter/wxrsplitter.getsource.net/choppedPress.py";
-	// $OUTPUT_PATH = 			"/home/wxrsplitter/wxrsplitter.getsource.net/public_html/splitFiles/";
-	// $OUTPUT_PATH_LIVE = 		"http://wxrsplitter.getsource.net/splitFiles/";
-	// $MAX_INT_LENGTH = 		3;
-	// $DEBUG = 				false;
+	/**
+	 * Configuration Options
+	 */
 
+	/** Path Defines **/
+	// Path to choppedPress Python Script
+	define ( 'WXR_CMD' ,		WXR_BASEDIR . '/choppedPress.py' );
+
+	// Complete local path to public_html
 	define ( 'WXR_DIR' ,		WXR_BASEDIR . 'public_html' );
 
-	define ( 'WXR_CMD' , 		WXR_BASEDIR . '/choppedPress.py' );
-	define ( 'WXR_PATH' , 		WXR_DIR . '/splitFiles/' );
+	// Relative path within public_html to output files.
+	define ( 'WXR_OUTPUT_DIR' ,	'/splitFiles/' );
 
-	define ( 'WXR_URL' , 		$_SERVER["REQUEST_URI"] );
+	// Local output path
+	define ( 'WXR_PATH' , 		WXR_DIR . WXR_OUTPUT_DIR );
 
+	// Current Requested URI
+	define ( 'WXR_URL' ,		$_SERVER["REQUEST_URI"] );
+
+
+	/** Library Defines **/
+	// Local Path to Library
 	define ( 'LIBRARY' ,		WXR_DIR . '/library' );
+
+	// Local Functions Path within Library
 	define ( 'FUNCTIONS' ,		LIBRARY . '/functions' );
+
+	// Local Theme Path within Library
 	define ( 'THEME' ,			WXR_DIR . '/theme' );
 
+	// Defines Maximum amount of digits to pad for output XML Files
 	define ( 'MAX_INT_LENGTH' ,	3 );
+
+	// Toggles Debug Output
 	define ( 'WXR_DEBUG' , 		false );
+
 
 	if ( !file_exists( WXR_PATH ) )
 		mkdir( WXR_PATH );
 
+
 	/**
 	 * Function to include files from a directory.
 	 */
-	
 	function wxr_include_folder( $dir='' ) {
 		if ( $dir != '' ) {
 			$path = LIBRARY . '/' . $dir;
 			$includes = array();
-			if ( file_exists( $path ) ) { 
+			if ( file_exists( $path ) ) {
 				if ( $handle = opendir( $path ) ) {
 					$displayString = "";
 					$count = 0; 	
@@ -39,7 +57,7 @@
 						if ( $file != "." && $file != ".." ) {
 							$include = $file;
 							$file = substr( $file, strrpos( $file, '.' ) + 1 );
-							if ( $file == "php" ) { 
+							if ( $file == "php" ) {
 								$includes[$count] = $include;
 								$count++;
 							}
@@ -51,11 +69,11 @@
 				}
 			}
 			foreach ( $includes as $include ) {
-				require_once( LIBRARY . '/' . $dir . '/' . $include ); 
+				require_once( LIBRARY . '/' . $dir . '/' . $include );
 			}
 		}
 	};
 
 	wxr_include_folder( 'functions' );
-	
+
 ?>
