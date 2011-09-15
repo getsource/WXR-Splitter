@@ -1,9 +1,7 @@
 <?php
 
-	/*
+	/**
 	 *	Functions go here
-	 *
-	 *
 	 */
 
 	/**
@@ -14,7 +12,6 @@
 	 * @param string $string What to remove the trailing slash from.
 	 * @return string String without the trailing slash.
 	 */
-
 	function trailingslashit($string) {
 		return untrailingslashit($string) . '/';
 	}
@@ -27,29 +24,27 @@
 	 * @param string $string What to remove the trailing slash from.
 	 * @return string String without the trailing slash.
 	 */
-		
 	function untrailingslashit($string) {
 		return rtrim($string, '/');
 	}
 
+
 	function wxr_handle_url() {
-		
 		$page = array();
-		
+
 		$URL = (!empty($_SERVER['HTTPS'])) ? "https://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'] : "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
-	 	
+
 		if ( !empty( $URL ) ) {
-			
 			$page['slug'] = end(explode ('/', $URL));
 			$page['depth'] = count( explode('/' , str_replace( WXR_URL . '/', '', $URL) ) );
-		
 		}
-		
+
 		return $page;
 	}
-	
+
+
 	function wxr_handle_uploads() {
-	
+
 		if ( isset ( $_FILES['bigfile'] ) ) {
 
 			$CHOPPEDPRESS_CMD = WXR_CMD;
@@ -65,20 +60,20 @@
 			if ($_FILES["bigfile"]["error"] > 0) {
 				die("File Upload Failed");
 			}
-			
+		
 			$fileToConvert = $_FILES["bigfile"]["tmp_name"];
 			$fileSize = $_FILES["bigfile"]["size"] / (1024*1024);
 			$outputFile = md5( rand() + time() );
-			
+		
 			$numChunks = (int)$fileSize;
 
 			$commandToRun = "python $CHOPPEDPRESS_CMD -n $numChunks -i $fileToConvert -o $OUTPUT_PATH$outputFile";
-			
+		
 			$commandOutput = shell_exec( $commandToRun );
-			
+		
 			if ( WXR_DEBUG )
 				echo $commandOutput;
-			
+		
 			// Output File Links
 			echo "<h2>Your Split Files!<h2>";
 			echo "<ul>";
@@ -91,9 +86,9 @@
 				
 				echo "<li><a href='$OUTPUT_URL$paddedFileName'>$paddedFileName</a></li>";
 			}
-	
+
 			echo "</ul>";
-			
+		
 			// Now, Create ZIP file
 			$dir = WXR_PATH;
 			$dest = "$dir$outputFile.zip";
@@ -113,10 +108,9 @@
 		} else {
 			// echo 'nope';
 		}
-	
 	}
-	
-	
+
+
 	function Zip( $source, $destination ) {
 
 		if ( extension_loaded( 'zip' ) === true ) {
