@@ -1,6 +1,13 @@
 <?php
 
 	/*
+	 * Include needed files
+	 *
+	 */
+
+	wxr_include_folder( 'functions' );
+
+	/*
 	 * Figure out what page we are on and load it
 	 *
 	 */
@@ -13,12 +20,12 @@
 	// find actual pages...
 	if ( isset( $page_info['slug'] ) && $page_info['slug']  != '' ) {
 		
-		$page = trailingslashit( THEME ) . $page_info['slug'] . '.php' ;
+		$page = trailingslashit( THEMES ) . trailingslashit( THEME ) . $page_info['slug'] . '.php' ;
 	} else {
-		$page = trailingslashit( THEME ) . 'home.php' ;
+		$page = trailingslashit( THEMES ) . trailingslashit( THEME ) . 'home.php' ;
 		
 	}
-	
+		
 	// load correct page
 	if ( file_exists( $page ) ) {
 		// load actual theme file...

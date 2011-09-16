@@ -6,6 +6,29 @@
 	 *
 	 */
 
+	/*
+	 *	Get any part of a template/theme
+	 *
+	 *	inspired by WordPress get_template_part()
+	 *  
+	 *  has hierarchy by including second filename part
+	 *  get_template_part( 'header' ) will include the current theme's header.php
+	 *  get_template_part( 'header' , 'custom' ) will include the current theme's header-custom.php
+	 */
+
+	function get_template_part( $file='' , $name='' ) {
+		
+		if ( $name )
+			$name = '-' . $name;
+		
+		$include = trailingslashit( THEMES ) . trailingslashit( THEME ) . $file . $name . '.php';
+	
+		if ( file_exists( $include ) ) {
+			include ( $include );
+		}
+	
+	}
+
 	/**
 	 * Add trailing slash if it exists.
 	 *

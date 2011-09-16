@@ -1,4 +1,4 @@
-<?php include( 'header.php' ); ?>
+<?php get_template_part( 'header' ); ?>
 
   <div id="container">
     <header>
@@ -24,4 +24,5 @@
 	
     </footer>
   </div> <!--! end of #container -->
-<?php include( 'footer.php' ); ?>
+
+<?php get_template_part( 'footer' ); ?>
