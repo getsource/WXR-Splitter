@@ -5,12 +5,6 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
 
-
-  <!-- scripts concatenated and minified via ant build script-->
-  <script defer src="js/plugins.js"></script>
-  <script defer src="js/script.js"></script>
-  <!-- end scripts-->
-
 	
   <!-- Change UA-XXXXX-X to be your site's ID -->
   <script>
@@ -20,6 +14,17 @@
     });
   </script>
 
+	<!-- Prettify for making code look nice -->
+	<script src="library/js/libs/prettify.js"></script>
+
+	<!-- Twitter BootStrap js -->
+    <script src="library/js/bootstrap/bootstrap-modal.js"></script>
+    <script src="library/js/bootstrap/bootstrap-alerts.js"></script>
+    <script src="library/js/bootstrap/bootstrap-twipsy.js"></script>
+    <script src="library/js/bootstrap/bootstrap-popover.js"></script>
+    <script src="library/js/bootstrap/bootstrap-dropdown.js"></script>
+    <script src="library/js/bootstrap/bootstrap-scrollspy.js"></script>
+    <script src="library/js/bootstrap/bootstrap-tabs.js"></script>
 
   <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
        chromium.org/developers/how-tos/chrome-frame-getting-started -->
@@ -27,6 +32,10 @@
     <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
     <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
   <![endif]-->
-  
+  <script>
+  $(function () {
+    $('.tabs').tabs()
+  })
+</script>
 </body>
 </html>

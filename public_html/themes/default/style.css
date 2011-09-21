@@ -215,17 +215,17 @@ td { vertical-align: top; }
 	
 	h1, h2, h3, h4, h5, h6 { font-weight: normal; }
 
-
-
-	#main		{ width: 500px; margin: 50px auto; }
-
 	.text		{ padding: 20px; }
 	.shadows	{ box-shadow: 0 0 5px #ccc; }
 
+	input[type="file"] { background: transparent; }
 
+	form { margin: 10px; padding: 20px; }
 
-
-
+	form label, form input { margin: 10px 0; }
+	
+	.pad20 		{ padding: 20px; }
+	.margin20	{ margin: 20px; }
 
 /* ==|== non-semantic helper classes ========================================
    Please define your styles before this section.

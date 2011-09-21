@@ -1,7 +1,9 @@
 <?php
 
-	/**
+	/*
 	 *	Functions go here
+	 *
+	 *
 	 */
 
 	/**
@@ -12,6 +14,7 @@
 	 * @param string $string What to remove the trailing slash from.
 	 * @return string String without the trailing slash.
 	 */
+
 	function trailingslashit($string) {
 		return untrailingslashit($string) . '/';
 	}
@@ -30,7 +33,31 @@
 	}
 
 
+	/*
+	 *	Get any part of a template/theme
+	 *
+	 *	inspired by WordPress get_template_part()
+	 *  
+	 *  has hierarchy by including second filename part
+	 *  get_template_part( 'header' ) will include the current theme's header.php
+	 *  get_template_part( 'header' , 'custom' ) will include the current theme's header-custom.php
+	 */
+	function get_template_part( $file='' , $name='' ) {
+
+		if ( $name )
+			$name = '-' . $name;
+
+		$include = trailingslashit( THEMES ) . trailingslashit( THEME ) . $file . $name . '.php';
+	
+		if ( file_exists( $include ) ) {
+			include ( $include );
+		}
+
+	}
+
+
 	function wxr_handle_url() {
+
 		$page = array();
 
 		$URL = (!empty($_SERVER['HTTPS'])) ? "https://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'] : "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
@@ -52,30 +79,27 @@
 			$OUTPUT_PATH = WXR_PATH;
 			$OUTPUT_URL = WXR_OUTPUT_DIR;
 
-			// check and escape filenames
-			// parse and split files
-			// name files using some kind of hash
-			// place in directory named with hash
-			// offer download of files
-
 			if ($_FILES["bigfile"]["error"] > 0) {
-				die("File Upload Failed");
+				wxr_message( 'warning' , "<strong>Uh oh!</strong> Something went sideways. Please try again.");
+				die;
 			}
-		
+
 			$fileToConvert = $_FILES["bigfile"]["tmp_name"];
 			$fileSize = $_FILES["bigfile"]["size"] / (1024*1024);
 			$outputFile = md5( rand() + time() );
-		
+
 			$numChunks = (int)$fileSize;
 
 			$commandToRun = "python $CHOPPEDPRESS_CMD -n $numChunks -i $fileToConvert -o $OUTPUT_PATH$outputFile";
-		
+
 			$commandOutput = shell_exec( $commandToRun );
-		
+
 			if ( WXR_DEBUG )
 				echo $commandOutput;
-		
+
 			// Output File Links
+			wxr_message( 'success' , "<strong>Nice!</strong> Your files are ready to go!");      
+
 			echo "<h2>Your Split Files!<h2>";
 			echo "<ul>";
 
@@ -84,12 +108,12 @@
 			for ($i=1; $i <= $numChunks; $i++) {
 				$paddedFileName = $outputFile . str_pad( (int)$i, MAX_INT_LENGTH, "0", STR_PAD_LEFT) . ".xml";
 				$splitFiles[$i] = $paddedFileName;
-				
+
 				echo "<li><a href='$OUTPUT_URL$paddedFileName'>$paddedFileName</a></li>";
 			}
 
 			echo "</ul>";
-		
+
 			// Now, Create ZIP file
 			$dir = WXR_PATH;
 			$dest = "$dir$outputFile.zip";
@@ -107,8 +131,9 @@
 			}
 
 		} else {
-			// echo 'nope';
+
 		}
+
 	}
 
 
